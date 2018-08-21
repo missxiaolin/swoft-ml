@@ -36,16 +36,16 @@ class SwoftExceptionHandler
     /**
      * @Handler(Exception::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerException(Response $response, \Throwable $throwable)
     {
-        $file      = $throwable->getFile();
-        $line      = $throwable->getLine();
-        $code      = $throwable->getCode();
+        $file = $throwable->getFile();
+        $line = $throwable->getLine();
+        $code = $throwable->getCode();
         $exception = $throwable->getMessage();
 
         $data = ['msg' => $exception, 'file' => $file, 'line' => $line, 'code' => $code];
@@ -56,15 +56,15 @@ class SwoftExceptionHandler
     /**
      * @Handler(RuntimeException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerRuntimeException(Response $response, \Throwable $throwable)
     {
-        $file      = $throwable->getFile();
-        $code      = $throwable->getCode();
+        $file = $throwable->getFile();
+        $code = $throwable->getCode();
         $exception = $throwable->getMessage();
 
         return $response->json([$exception, 'runtimeException']);
@@ -73,7 +73,7 @@ class SwoftExceptionHandler
     /**
      * @Handler(ValidatorException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -88,7 +88,7 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadRequestException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -103,15 +103,15 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadMethodCallException::class)
      *
-     * @param Request    $request
-     * @param Response   $response
+     * @param Request $request
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerViewException(Request $request, Response $response, \Throwable $throwable)
     {
-        $name  = $throwable->getMessage(). $request->getUri()->getPath();
+        $name = $throwable->getMessage() . $request->getUri()->getPath();
         $notes = [
             'New Generation of PHP Framework',
             'High Performance, Coroutine and Full Stack',
@@ -138,7 +138,7 @@ class SwoftExceptionHandler
                 'link' => 'https://github.com/swoft-cloud/swoft',
             ],
         ];
-        $data  = compact('name', 'notes', 'links');
+        $data = compact('name', 'notes', 'links');
 
         return view('exception/index', $data);
     }
