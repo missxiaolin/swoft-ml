@@ -10,26 +10,32 @@
 
 namespace App\Controllers;
 
-use Swoft\App;
+use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
-use Swoft\Log\Log;
-use Swoft\View\Bean\Annotation\View;
-use Swoft\Contract\Arrayable;
-use Swoft\Http\Server\Exception\BadRequestException;
+use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Message\Server\Response;
+
 
 /**
  * Class IndexController
- * @Controller()
+ * @Controller
  */
 class IndexController
 {
 
     /**
-     * @RequestMapping("/")
+     * 注入自定义Response
+     * @Inject()
+     *
+     * @var \App\Core\HttpServer\Response
      */
-    public function index()
+    private $response;
+
+    /**
+     * @RequestMapping(route="/")
+     */
+    public function index(Request $request) : Response
     {
         $name = 'Swoft';
         $notes = [
@@ -42,6 +48,9 @@ class IndexController
             ],
         ];
         $data = compact('name', 'notes', 'links');
+        if ($request->getMethod() === 'POST') {
+            return $this->response->success($data);
+        }
         return view('index/index', $data);
     }
 }
