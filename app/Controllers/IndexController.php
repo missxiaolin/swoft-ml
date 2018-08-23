@@ -40,14 +40,14 @@ class IndexController
      */
     public function index(Request $request) : Response
     {
-        $name = 'Swoft';
+        $name = 'xiaolin';
         $notes = [
             'New Generation of PHP Framework',
         ];
         $links = [
             [
                 'name' => 'Home',
-                'link' => 'http://www.swoft.org',
+                'link' => 'http://www.missxiaolin.com',
             ],
         ];
         $data = compact('name', 'notes', 'links');
