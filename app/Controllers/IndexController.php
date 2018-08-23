@@ -13,6 +13,7 @@ namespace App\Controllers;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
+use Swoft\Http\Server\Bean\Annotation\RequestMethod;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Message\Server\Response;
 
@@ -33,7 +34,7 @@ class IndexController
     private $response;
 
     /**
-     * @RequestMapping(route="/")
+     * @RequestMapping(route="/", method={RequestMethod::GET,RequestMethod::POST})
      * @param Request $request
      * @return Response
      */
