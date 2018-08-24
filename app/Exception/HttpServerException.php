@@ -9,10 +9,10 @@
 namespace App\Exception;
 
 use App\Core\Constants\ErrorCode;
-use Exception;
+use Swoft\Http\Server\Exception\HttpException;
 use Throwable;
 
-class HttpServerException extends Exception implements ExceptionInterface
+class HttpServerException extends HttpException implements ExceptionInterface
 {
     /**
      * HttpServerException constructor.

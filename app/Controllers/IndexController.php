@@ -16,6 +16,7 @@ use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 use Swoft\Http\Server\Bean\Annotation\RequestMethod;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Message\Server\Response;
+use App\Exception\HttpServerException;
 
 
 /**
