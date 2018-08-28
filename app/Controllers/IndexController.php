@@ -10,7 +10,6 @@
 
 namespace App\Controllers;
 
-use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 use Swoft\Http\Server\Bean\Annotation\RequestMethod;
@@ -23,16 +22,8 @@ use App\Exception\HttpServerException;
  * Class IndexController
  * @Controller
  */
-class IndexController
+class IndexController extends BaseController
 {
-
-    /**
-     * 注入自定义Response
-     * @Inject()
-     *
-     * @var \App\Core\HttpServer\Response
-     */
-    private $response;
 
     /**
      * @RequestMapping(route="/", method={RequestMethod::GET,RequestMethod::POST})
