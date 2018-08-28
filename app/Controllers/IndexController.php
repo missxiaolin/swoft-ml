@@ -30,19 +30,9 @@ class IndexController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request) : Response
+    public function index(Request $request): Response
     {
-        $name = 'xiaolin';
-        $notes = [
-            'New Generation of PHP Framework',
-        ];
-        $links = [
-            [
-                'name' => 'Home',
-                'link' => 'http://www.missxiaolin.com',
-            ],
-        ];
-        $data = compact('name', 'notes', 'links');
+        $data = config('message');
         if ($request->getMethod() === 'POST') {
             return $this->response->success($data);
         }
