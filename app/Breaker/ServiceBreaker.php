@@ -21,6 +21,13 @@ use Swoft\Sg\Circuit\CircuitBreaker;
  */
 class ServiceBreaker extends CircuitBreaker
 {
+
+    /**
+     * 服务名称
+     * @var string
+     */
+    public $serviceName = "breakerService";
+
     /**
      * The number of successive failures
      * If the arrival, the state switch to open
