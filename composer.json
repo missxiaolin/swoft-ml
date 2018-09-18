@@ -31,7 +31,8 @@
         "swoft/process": "^1.0",
         "swoft/memory": "^1.0",
         "swoft/service-governance": "^1.0",
-        "xiaolin/enum": "^0.2.1"
+        "xiaolin/enum": "^0.2.1",
+        "xiaolin/swoole-queue": "^0.3"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "dev-master",
@@ -63,6 +64,10 @@
         "packagist": {
             "type": "composer",
             "url": "https://packagist.phpcomposer.com"
+        },
+        "xiaolin/swoole-queue": {
+            "type": "git",
+            "url": "https://github.com/missxiaolin/x-swoole-queue"
         }
     }
 }
