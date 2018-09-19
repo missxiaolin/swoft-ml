@@ -20,18 +20,18 @@ use Swoft\Console\Output\Output;
 class QueueCommand
 {
     /**
-     * 消费队列
+     *
      * @Usage {command}
      * @Example {command}
      * @param Input  $input
      * @param Output $output
      * @return int
+     * @throws \Lin\Swoole\Queue\QueueException
      */
     public function handle(Input $input, Output $output): int
     {
-        $queue = bean(Queue::class);
-        $output->writeln($queue->sss);
-
+        $queue = Queue::instance();
+        $queue->run();
         return 0;
     }
 }
