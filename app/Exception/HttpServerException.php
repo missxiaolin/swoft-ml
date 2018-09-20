@@ -22,7 +22,7 @@ class HttpServerException extends HttpException implements ExceptionInterface
      * @throws \ReflectionException
      * @throws \xiaolin\Enum\Exception\EnumException
      */
-    public function __construct($code = 0, $message = null, Throwable $previous = null)
+    public function __construct($code, $message = null, Throwable $previous = null)
     {
         if (!isset($message)) {
             $message = ErrorCode::getMessage($code);

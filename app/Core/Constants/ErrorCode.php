@@ -16,6 +16,8 @@ use xiaolin\Enum\Enum;
  */
 class ErrorCode extends Enum
 {
+    const SUCCESS = 0;
+
     const SERVER_ERROR = 500;
 
     const VALIDATE_FAIL = 600;

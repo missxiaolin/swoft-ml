@@ -29,7 +29,7 @@ class Response
     {
         $response = RequestContext::getResponse();
         return $response->json([
-            'code' => 0,
+            'code' => ErrorCode::SUCCESS,
             'data' => $data,
         ]);
     }
