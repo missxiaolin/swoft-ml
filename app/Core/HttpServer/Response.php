@@ -22,10 +22,10 @@ class Response
 {
     /**
      * 返回成功的数据
-     * @param array $data
+     * @param $data
      * @return HttpServerResponse
      */
-    public function success($data = []): HttpServerResponse
+    public function success($data = null): HttpServerResponse
     {
         $response = RequestContext::getResponse();
         return $response->json([
