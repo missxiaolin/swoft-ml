@@ -36,9 +36,5 @@ return [
             '${noticeHandler}',
             '${applicationHandler}',
         ],
-    ],
-    'lineFormatter' => [
-        'class' => \Monolog\Formatter\LineFormatter::class,
-        'allowInlineLineBreaks' => true,
-    ],
+    ]
 ];
