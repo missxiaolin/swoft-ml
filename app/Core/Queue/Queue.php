@@ -50,6 +50,9 @@ class Queue extends Job
         $this->setLoggerHandler($logger);
     }
 
+    /**
+     * @return int
+     */
     public function countCurrentJobs()
     {
         $redis = $this->getRedisChildClient();
