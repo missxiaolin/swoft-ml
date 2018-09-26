@@ -29,4 +29,5 @@ return [
     'provider' => require __DIR__ . DS . 'provider.php',
     'message' => require __DIR__ . DS . 'message.php',
     'queue' => require __DIR__ . DS . 'queue.php',
+    'beanScan' => require __DIR__ . DS . 'beanScan.php',
 ];
