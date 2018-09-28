@@ -29,11 +29,10 @@ return [
             ],
         ],
         'discovery' => [
-            'name' => 'user',
-            'dc' => 'dc',
+            'dc' => 'dc1',
             'near' => '',
             'tag' => '',
-            'passing' => true,
+            'passing' => true
         ],
     ],
 ];
