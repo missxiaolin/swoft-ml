@@ -8,9 +8,12 @@
 
 namespace Swoft\Test\Cases;
 
-
 use Swoft\Test\AbstractTestCase;
 
+/**
+ * Class ExampleTest
+ * @package Swoft\Test\Cases
+ */
 class ExampleTest extends AbstractTestCase
 {
     public function testExample()
