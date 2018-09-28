@@ -22,6 +22,11 @@ return [
     'I18n' => [
         'sourceLanguage' => '@root/resources/messages/',
     ],
+    'devtool' => [
+        'enable' => false,
+        'logEventToConsole' => false,
+        'logHttpRequestToConsole' => false,
+    ],
     'db' => require __DIR__ . DS . 'db.php',
     'cache' => require __DIR__ . DS . 'cache.php',
     'service' => require __DIR__ . DS . 'service.php',
