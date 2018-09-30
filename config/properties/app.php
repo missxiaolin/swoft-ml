@@ -35,4 +35,5 @@ return [
     'message' => require __DIR__ . DS . 'message.php',
     'queue' => require __DIR__ . DS . 'queue.php',
     'beanScan' => require __DIR__ . DS . 'beanScan.php',
+    'components' => require __DIR__ . DS . 'components.php',
 ];
