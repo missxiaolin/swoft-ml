@@ -6,25 +6,51 @@
  * file that was distributed with this source code.
  */
 
+use App\Core\Logger\Handlers\FileHandler;
+use \Monolog\Formatter\LineFormatter;
+use \Swoft\Log\Logger;
+
 return [
+    'debugHandler' => [
+        'class' => FileHandler::class,
+        'fileName' => 'debug',
+        'logFile' => '@runtime/logs/debug.log',
+        'formatter' => '${lineFormatter}',
+        'levels' => [
+            Logger::INFO,
+            Logger::DEBUG,
+            Logger::TRACE,
+        ],
+    ],
+    'traceHandler' => [
+        'class' => FileHandler::class,
+        'fileName' => 'trace',
+        'logFile' => '@runtime/logs/trace.log',
+        'formatter' => '${lineFormatter}',
+        'levels' => [
+            Logger::TRACE,
+        ],
+    ],
     'noticeHandler' => [
-        'class' => \Swoft\Log\FileHandler::class,
+        'class' => FileHandler::class,
+        'fileName' => 'notice',
         'logFile' => '@runtime/logs/notice.log',
         'formatter' => '${lineFormatter}',
         'levels' => [
-            \Swoft\Log\Logger::NOTICE,
-            \Swoft\Log\Logger::INFO,
-            \Swoft\Log\Logger::DEBUG,
-            \Swoft\Log\Logger::TRACE,
+            Logger::NOTICE,
         ],
     ],
     'applicationHandler' => [
-        'class' => \Swoft\Log\FileHandler::class,
+        'class' => FileHandler::class,
+        'fileName' => 'error',
         'logFile' => '@runtime/logs/error.log',
         'formatter' => '${lineFormatter}',
         'levels' => [
-            \Swoft\Log\Logger::ERROR,
-            \Swoft\Log\Logger::WARNING,
+            Logger::WARNING,
+            Logger::ERROR,
+            Logger::CRITICAL,
+            Logger::ALERT,
+            Logger::EMERGENCY,
         ],
     ],
     'logger' => [
@@ -35,6 +61,12 @@ return [
         'handlers' => [
             '${noticeHandler}',
             '${applicationHandler}',
+            '${debugHandler}',
+            '${traceHandler}',
         ],
-    ]
+    ],
+    'lineFormatter' => [
+        'class' => LineFormatter::class,
+        'allowInlineLineBreaks' => true,
+    ],
 ];
