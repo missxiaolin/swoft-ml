@@ -20,7 +20,8 @@ use Swoft\Console\Output\Output;
  * @Command(coroutine=false)
  * @package App\Commands
  */
-class QueueCommand{
+class QueueCommand
+{
     /**
      * this is a example command
      * @Usage {command} [arguments ...] [--options ...]
@@ -40,6 +41,34 @@ class QueueCommand{
     {
         $queue = Queue::instance();
         $queue->run();
+        return 0;
+    }
+
+    /**
+     * 重载失败的消息到队列
+     * @Usage {command}
+     * @Example {command}
+     * @return int
+     */
+    public function reload(Output $output): int
+    {
+        $queue = Queue::instance();
+        $count = $queue->reloadErrorJobs();
+        $output->colored("已将{$count}条消息，重载到消费队列");
+        return 0;
+    }
+
+    /**
+     * 删除所有失败的消息
+     * @Usage {command}
+     * @Example {command}
+     * @return int
+     */
+    public function flush(Output $output): int
+    {
+        $queue = Queue::instance();
+        $count = $queue->flushErrorJobs();
+        $output->colored("已删除所有失败的消息，共{$count}条");
         return 0;
     }
 }
