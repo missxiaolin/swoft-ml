@@ -7,9 +7,10 @@
  * file that was distributed with this source code.
  */
 
+$pfile = env('PFILE', '@runtime/swoft.pid');
 return [
     'server' => [
-        'pfile' => env('PFILE', '/tmp/swoft.pid'),
+        'pfile' => alias($pfile),
         'pname' => env('PNAME', 'php-swoft'),
         'tcpable' => env('TCPABLE', true),
         'cronable' => env('CRONABLE', false),
