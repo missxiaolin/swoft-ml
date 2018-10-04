@@ -10,6 +10,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Constants\ErrorCode;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 use Swoft\Http\Server\Bean\Annotation\RequestMethod;
@@ -37,5 +38,17 @@ class IndexController extends BaseController
             return $this->response->success($data);
         }
         return view('index/index', $data);
+    }
+
+    /**
+     * @RequestMapping(route="/error", method={RequestMethod::GET,RequestMethod::POST})
+     * @param Request $request
+     * @return Response
+     * @throws \ReflectionException
+     * @throws \xiaolin\Enum\Exception\EnumException
+     */
+    public function error(Request $request): Response
+    {
+        throw new HttpServerException(ErrorCode::$ENUM_PARAMS_ERROR);
     }
 }
