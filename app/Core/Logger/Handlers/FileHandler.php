@@ -21,6 +21,9 @@ class FileHandler extends SwoftFileHandler
 {
     protected $fileName = 'swoft';
 
+    /**
+     * @return string
+     */
     protected function getLogFile()
     {
         $date = date('Ymd');
@@ -43,6 +46,9 @@ class FileHandler extends SwoftFileHandler
         }
     }
 
+    /**
+     * @param array $records
+     */
     protected function write(array $records)
     {
         $logFile = $this->getLogFile();
@@ -58,7 +64,7 @@ class FileHandler extends SwoftFileHandler
     /**
      * 协程写文件
      *
-     * @param string $logFile     日志路径
+     * @param string $logFile 日志路径
      * @param string $messageText 文本信息
      */
     protected function coWrite(string $logFile, string $messageText)
@@ -74,7 +80,7 @@ class FileHandler extends SwoftFileHandler
     /**
      * 同步写文件
      *
-     * @param string $logFile     日志路径
+     * @param string $logFile 日志路径
      * @param string $messageText 文本信息
      */
     protected function syncWrite(string $logFile, string $messageText)
