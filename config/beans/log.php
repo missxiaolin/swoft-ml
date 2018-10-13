@@ -7,8 +7,6 @@
  */
 
 use App\Core\Logger\Handlers\FileHandler;
-use \Monolog\Formatter\LineFormatter;
-use \Swoft\Log\Logger;
 
 return [
     'debugHandler' => [
@@ -17,9 +15,8 @@ return [
         'logFile' => '@runtime/logs/debug.log',
         'formatter' => '${lineFormatter}',
         'levels' => [
-            Logger::INFO,
-            Logger::DEBUG,
-            Logger::TRACE,
+            \Swoft\Log\Logger::INFO,
+            \Swoft\Log\Logger::DEBUG,
         ],
     ],
     'traceHandler' => [
@@ -28,7 +25,7 @@ return [
         'logFile' => '@runtime/logs/trace.log',
         'formatter' => '${lineFormatter}',
         'levels' => [
-            Logger::TRACE,
+            \Swoft\Log\Logger::TRACE,
         ],
     ],
     'noticeHandler' => [
@@ -37,7 +34,7 @@ return [
         'logFile' => '@runtime/logs/notice.log',
         'formatter' => '${lineFormatter}',
         'levels' => [
-            Logger::NOTICE,
+            \Swoft\Log\Logger::NOTICE,
         ],
     ],
     'applicationHandler' => [
@@ -46,11 +43,11 @@ return [
         'logFile' => '@runtime/logs/error.log',
         'formatter' => '${lineFormatter}',
         'levels' => [
-            Logger::WARNING,
-            Logger::ERROR,
-            Logger::CRITICAL,
-            Logger::ALERT,
-            Logger::EMERGENCY,
+            \Swoft\Log\Logger::WARNING,
+            \Swoft\Log\Logger::ERROR,
+            \Swoft\Log\Logger::CRITICAL,
+            \Swoft\Log\Logger::ALERT,
+            \Swoft\Log\Logger::EMERGENCY,
         ],
     ],
     'logger' => [
@@ -65,8 +62,34 @@ return [
             '${traceHandler}',
         ],
     ],
+    'customLogger' => [
+        'class' => \Swoft\Log\Logger::class,
+        'name' => APP_NAME,
+        'enable' => env('LOG_ENABLE', false),
+        'flushInterval' => 1,
+        'flushRequest' => true,
+        'handlers' => [
+            '${customHandler}',
+        ],
+    ],
+    'customHandler' => [
+        'class' => FileHandler::class,
+        'fileName' => 'custom',
+        'formatter' => '${lineFormatter}',
+        'levels' => [
+            \Swoft\Log\Logger::INFO,
+            \Swoft\Log\Logger::DEBUG,
+            \Swoft\Log\Logger::NOTICE,
+            \Swoft\Log\Logger::TRACE,
+            \Swoft\Log\Logger::WARNING,
+            \Swoft\Log\Logger::ERROR,
+            \Swoft\Log\Logger::CRITICAL,
+            \Swoft\Log\Logger::ALERT,
+            \Swoft\Log\Logger::EMERGENCY,
+        ],
+    ],
     'lineFormatter' => [
-        'class' => LineFormatter::class,
+        'class' => \Monolog\Formatter\LineFormatter::class,
         'allowInlineLineBreaks' => true,
     ],
 ];
