@@ -13,17 +13,20 @@ namespace App\Exception\Handlers;
 use App\Core\Constants\ErrorCode;
 use App\Core\Logger\ThrowableLogger;
 use Swoft\Bean\Annotation\Handler;
+use Swoft\Helper\JsonHelper;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Message\Server\Response;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Bean\Annotation\ExceptionHandler;
-use Swoft\Exception\RuntimeException;
 use Exception;
+use Swoft\Exception\RuntimeException;
 use Swoft\Exception\BadMethodCallException;
 use Swoft\Exception\ValidatorException;
 use Swoft\Http\Server\Exception\BadRequestException;
 use Swoft\Http\Server\Exception\NotAcceptableException;
 use Swoft\Http\Server\Exception\RouteNotFoundException;
+use Swoft\Rpc\Exception\RpcStatusException;
+use App\Exception\NoContentException;
 
 /**
  * the handler of global exception
@@ -54,12 +57,12 @@ class SwoftExceptionHandler
     /**
      * @Handler(Exception::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerException(Response $response, \Throwable $throwable)
+    public function handleException(Response $response, \Throwable $throwable)
     {
         $file = $throwable->getFile();
         $line = $throwable->getLine();
@@ -74,12 +77,12 @@ class SwoftExceptionHandler
     /**
      * @Handler(RuntimeException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerRuntimeException(Response $response, \Throwable $throwable)
+    public function handleRuntimeException(Response $response, \Throwable $throwable)
     {
         $file = $throwable->getFile();
         $code = $throwable->getCode();
@@ -93,12 +96,12 @@ class SwoftExceptionHandler
     /**
      * @Handler(ValidatorException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerValidatorException(Response $response, \Throwable $throwable)
+    public function handleValidatorException(Response $response, \Throwable $throwable)
     {
         $code = $throwable->getCode();
         $exception = $throwable->getMessage();
@@ -111,12 +114,12 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadRequestException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerBadRequestException(Response $response, \Throwable $throwable)
+    public function handleBadRequestException(Response $response, \Throwable $throwable)
     {
         $code = $throwable->getCode();
         $exception = $throwable->getMessage();
@@ -129,17 +132,17 @@ class SwoftExceptionHandler
     /**
      * @Handler(NotAcceptableException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerNotAcceptableException(Response $response, \Throwable $throwable)
+    public function handleNotAcceptableException(Response $response, \Throwable $throwable)
     {
         $code = $throwable->getCode();
         $exception = $throwable->getMessage();
 
-        $this->logger->notice($throwable);
+        $this->logger->getLogger()->notice("{$code}:{$exception}");
 
         return $this->response->fail($code, $exception);
     }
@@ -147,12 +150,12 @@ class SwoftExceptionHandler
     /**
      * @Handler(RouteNotFoundException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerRouteNotFoundException(Response $response, \Throwable $throwable)
+    public function handleRouteNotFoundException(Response $response, \Throwable $throwable)
     {
         $code = $throwable->getCode();
         $exception = $throwable->getMessage();
@@ -163,15 +166,55 @@ class SwoftExceptionHandler
     }
 
     /**
-     * @Handler(BadMethodCallException::class)
+     * @Handler(NoContentException::class)
      *
-     * @param Request    $request
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
-    public function handlerViewException(Request $request, Response $response, \Throwable $throwable)
+    public function handleNoContentException(Response $response, \Throwable $throwable)
+    {
+        $code = $throwable->getCode();
+        $exception = $throwable->getMessage();
+
+        $this->logger->getLogger()->debug("{$code}:{$exception}");
+
+        return $this->response->fail($code, $exception);
+    }
+
+    /**
+     * @Handler(RpcStatusException::class)
+     *
+     * @param Response $response
+     * @param \Throwable $throwable
+     *
+     * @return Response
+     */
+    public function handleRpcStatusException(Response $response, \Throwable $throwable)
+    {
+        $code = $throwable->getStatus() ?? $throwable->getCode();
+        $exception = $throwable->getResponseMessage() ?? $throwable->getMessage();
+        $data = $throwable->getResponse();
+
+        if (empty($code)) {
+            $code = ErrorCode::SERVER_ERROR;
+        }
+        $this->logger->getLogger()->warning('RpcStatusException:' . JsonHelper::encode($data, JSON_UNESCAPED_UNICODE));
+
+        return $this->response->fail($code, $exception);
+    }
+
+    /**
+     * @Handler(BadMethodCallException::class)
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param \Throwable $throwable
+     *
+     * @return Response
+     */
+    public function handleViewException(Request $request, Response $response, \Throwable $throwable)
     {
         $name = $throwable->getMessage() . $request->getUri()->getPath();
         $notes = [
