@@ -7,5 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use App\Core\RpcServer\Dispatcher;
+
 return [
+    'ServiceDispatcher' => [
+        'class' => Dispatcher::class,
+    ],
 ];
