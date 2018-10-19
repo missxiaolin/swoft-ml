@@ -6,8 +6,6 @@
  * file that was distributed with this source code.
  */
 
-use App\Core\Logger\Handlers\FileHandler;
-
 $config = [
     'logger' => [
         'name' => APP_NAME,
