@@ -49,8 +49,8 @@ class Dispatcher extends ServiceDispatcher
     {
         /**
          * @var Server $server
-         * @var int    $fd
-         * @var int    $fromid
+         * @var int $fd
+         * @var int $fromid
          * @var string $data
          */
         list($server, $fd, $fromid, $data) = $params;
@@ -119,9 +119,9 @@ class Dispatcher extends ServiceDispatcher
 
     /**
      * @param \Swoole\Server $server
-     * @param int            $fd
-     * @param int            $fromid
-     * @param string         $data
+     * @param int $fd
+     * @param int $fromid
+     * @param string $data
      * @return Request
      */
     private function getRequest(Server $server, int $fd, int $fromid, string $data): Request
