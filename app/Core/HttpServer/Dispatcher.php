@@ -10,6 +10,10 @@ namespace App\Core\HttpServer;
 
 use Swoft\Http\Server\ServerDispatcher;
 
+/**
+ * Class Dispatcher
+ * @package App\Core\HttpServer
+ */
 class Dispatcher extends ServerDispatcher
 {
     protected function afterDispatch($response)
